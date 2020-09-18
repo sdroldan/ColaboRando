@@ -1,0 +1,135 @@
+---
+title: "Introducción al `R`"
+author: "Sergio Roldán B."
+output:
+  html_document:
+    df_print: paged
+  learnr::tutorial:
+    allow_skip: yes
+runtime: shiny_prerendered 
+bibliography:
+  - "packages.bib"
+link-citations: yes
+description: |
+  jjjj
+tutorial:
+  version: 0.102
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+tutorial_options(exercise.completion = FALSE,exercise.timelimit = 10,exercise.eval=TRUE)
+
+knitr::opts_chunk$set(echo = TRUE, highlight = TRUE) 
+gradethis::gradethis_setup()
+  #exercise.checker = gradethis::grade_learnr)
+## Cita de paquetes  
+packages<-c(.packages())
+knitr::write_bib(packages, 'packages.bib')
+packages_versions <- function(p) {
+  as.data.frame(cbind(nombre=packageDescription(p)$Package, version=packageDescription(p)$Version,cita=paste('@R',packageDescription(p)$Package,sep='-')))
+}
+idxpkBase<-match(c('base','utils','stats','graphics','datasets','methods','grDevices'),packages)
+packages<-packages[-idxpkBase]
+pack<-packages_versions(packages[1])
+for (i in packages[-1]){ pack<-rbind.data.frame(pack,packages_versions(i))
+}
+###--------------
+```
+
+# Bases {data-progressive=TRUE}
+Primero vamos a ver los comandos más básicos, para lo cual empezaremos a utilizar los "Tableros de Prueba", donde podrá probar los comandos.   
+
+## Comentarios  
+El carácter "#" tiene la función desabilitar la interpretación de la cadena de caracteres que sigue. Le dice al intérprete que ignore lo que sigue... 
+Para ver el efecto, quítele el "#" a la línea y corra el código.  
+```{r comentarios, exercise=TRUE,exercise.completation=TRUE,exercise.cap = "Tablero de pruebas",exercise.eval=TRUE}
+# Esto es un comentario 
+
+```
+## Asignación  
+"__<-__" se utiliza para la __asignación__ de valores o funciones a una variable (u objeto). "__=__" tiene la misma utilidad pero puede generar confusión cuando se lo utiliza como operador de comparación (como "__x==y__").   
+Si el código devuelve error, pruebe corregirlo.  
+```{r asignacion, exercise=TRUE,exercise.completation=TRUE, exercise.timelimit=60,exercise.cap = "Tablero de pruebas",exercise.eval=FALSE}
+Se asigna el valor a "x"
+x<-1 + 5^2 # esta es una operación de asignación
+x # muestra el valor de "x"  
+```  
+<div id="asignacion-hint">
+**Sugerencia:** Debieras usar el "#" en alguna parte.
+</div>
+
+## Operaciones básicas  
+```{r operaciones, exercise=TRUE,exercise.completation=TRUE,exercise.cap = "Tablero de pruebas",exercise.eval=TRUE}
+# Operaciones simples  
+1+20^2+2*100/10  # Observe precedencia  
+#  
+x<-sqrt(3^2+4^2);  
+y<-log10(10000)  
+z<-log2(128)   
+sprintf("El valor de x= %f, el de y=%f y el de z= %f",x,y,z)  
+```
+
+
+
+#
+Calcule, con una precisión de $\frac{1}{1000}$, el número medio de semanas que tiene un mes ... [@R-gradethis]  
+```{r eje1, exercise =TRUE,exercise.cap="Código"}
+
+```
+
+```{r eje1-check}
+# Ejemplo obtenido de gradethis [@R-gradethis]
+grade_result(
+  pass_if(~ identical(.result, 365.25 / 12 / 7), "Correcto!!. Existen 4.348214 semanas en un mes promedio."),
+  fail_if(~ identical(.result, 365 / 7 / 12), "Estás asumiendo un año promedio de 365 días? Debido a los años bisiestos, el promedio de días que tiene un año, actualmente es de 365.25 días."),
+  fail_if(~ identical(.result, 52 / 12), "Asumes que el año medio tiene 52 semanas? Actualmente tiene un poco más, porque  52 * 7 sólo son 364 días."),
+  fail_if(~ identical(.result, 4), "Cerca, pero cuatro es el número promedio de semanas en un mes."),
+  fail_if(~ TRUE, "Incorrecto. Considerá que son 365.25 días en un año promedio, 12 meses en un año y 7 días en la semana.")
+)
+```
+
+```{r eje1-solution}
+365.25/12/7
+```
+
+```{r options, echo = FALSE}
+question(
+  "¿?",
+  answer("1", message = "Realmente?"),
+  answer("2", message = "Realmente 2?"),
+  answer("3", message = "Realmente 3?"),
+  answer("15", correct = TRUE, message = "Correcta!!."),
+  type = "learnr_text", # radio
+  correct = "Respuesta Correcta!",
+  try_again = "Probá de nuevo!",
+  message = "Anotá la respuesta, para no olvidar...",
+  post_message = "Bién, ahora sigamos...",
+  submit_button = "Enviar respuesta",
+  try_again_button = "Reintentar",
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  options = list(
+    placeholder = "La respuesta es '15'",
+    trim = TRUE
+  )
+)
+``` 
+
+```{r letter-a, echo=FALSE,eval=FALSE}
+question("¿En qué se destaca R?",
+  answer("modelación estadística",correct = TRUE),
+  answer("graficos",correct = TRUE),
+  answer("almacenar y administrar datos",message="aunque puede almacenar datos y existen librerías que nos ayudan a gestinar los datos(como dplyr, tidy), los motores de bases de datos (como PostGreSQL,MySQL y SQLite) lo hacen mejor"),
+  answer("modelos dinámicos",message="como lenguaje, puede ser utilizado, pero requiere escribir mucho código"),
+  answer("teledetección", message = ""),
+  answer("modelos hidrológicos"),
+  answer("Consultas y getión de datos espaciales"),
+  answer("programación de alta prestación"),
+  incorrect="Aunque no es lo más apropiado, también puede hacerlo...",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```  
+# Referencias  
