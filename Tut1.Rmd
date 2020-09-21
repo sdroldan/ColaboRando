@@ -20,10 +20,10 @@ tutorial:
 library(learnr)
 library(gradethis)
 tutorial_options(exercise.completion = FALSE,exercise.timelimit = 10,exercise.eval=TRUE)
-
 knitr::opts_chunk$set(echo = TRUE, highlight = TRUE) 
 gradethis::gradethis_setup()
   #exercise.checker = gradethis::grade_learnr)
+
 ## Cita de paquetes  
 packages<-c(.packages())
 knitr::write_bib(packages, 'packages.bib')
@@ -35,6 +35,7 @@ packages<-packages[-idxpkBase]
 pack<-packages_versions(packages[1])
 for (i in packages[-1]){ pack<-rbind.data.frame(pack,packages_versions(i))
 }
+
 ###--------------
 ```
 
@@ -79,7 +80,7 @@ Calcule, con una precisión de $\frac{1}{1000}$, el número medio de semanas que
 
 ```
 
-```{r eje1-check}
+```{r eje1-check,echo=FALSE}
 # Ejemplo obtenido de gradethis [@R-gradethis]
 grade_result(
   pass_if(~ identical(.result, 365.25 / 12 / 7), "Correcto!!. Existen 4.348214 semanas en un mes promedio."),
@@ -94,9 +95,10 @@ grade_result(
 365.25/12/7
 ```
 
+
 ```{r options, echo = FALSE}
 question(
-  "¿?",
+  "Pregunta de prueba? probar con 1,2,3 y 15",
   answer("1", message = "Realmente?"),
   answer("2", message = "Realmente 2?"),
   answer("3", message = "Realmente 3?"),
@@ -115,6 +117,7 @@ question(
     trim = TRUE
   )
 )
+
 ``` 
 
 ```{r letter-a, echo=FALSE,eval=FALSE}
@@ -133,3 +136,6 @@ question("¿En qué se destaca R?",
 )
 ```  
 # Referencias  
+
+```
+
