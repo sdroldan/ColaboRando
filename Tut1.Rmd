@@ -1,9 +1,6 @@
 ---
 title: "Introducción al `R`"
-<<<<<<< HEAD
 author: "Sergio Roldán B."
-=======
->>>>>>> b25880f36099d7dd5df84a0123c19e273d42c3ae
 output:
   html_document:
     df_print: paged
@@ -16,29 +13,19 @@ link-citations: yes
 description: |
   jjjj
 tutorial:
-<<<<<<< HEAD
   version: 0.102
-=======
-  version: 0.101
->>>>>>> b25880f36099d7dd5df84a0123c19e273d42c3ae
+
 ---
 
 ```{r setup, include=FALSE}
 library(learnr)
-<<<<<<< HEAD
 library(gradethis)
 tutorial_options(exercise.completion = FALSE,exercise.timelimit = 10,exercise.eval=TRUE)
 
 knitr::opts_chunk$set(echo = TRUE, highlight = TRUE) 
 gradethis::gradethis_setup()
   #exercise.checker = gradethis::grade_learnr)
-=======
-
-library(gradethis)
-tutorial_options(exercise.completion = FALSE,exercise.timelimit = 10)
-#gradethis_setup()
-knitr::opts_chunk$set(echo = TRUE, highlight = TRUE) 
->>>>>>> b25880f36099d7dd5df84a0123c19e273d42c3ae
+  
 ## Cita de paquetes  
 packages<-c(.packages())
 knitr::write_bib(packages, 'packages.bib')
@@ -50,7 +37,6 @@ packages<-packages[-idxpkBase]
 pack<-packages_versions(packages[1])
 for (i in packages[-1]){ pack<-rbind.data.frame(pack,packages_versions(i))
 }
-<<<<<<< HEAD
 ###--------------
 ```
 
@@ -110,12 +96,6 @@ grade_result(
 365.25/12/7
 ```
 
-```{r options, echo = FALSE}
-question(
-  "¿?",
-=======
-```
-
 # R en el "ecosistema" del _Open Source_   
 
 ```{r letter-a, echo=FALSE}
@@ -134,84 +114,5 @@ question("¿En qué se destaca R?",
 )
 ```
 
-# Bases {data-progressive=TRUE}
-
-```{r comentarios, exercise=TRUE,exercise.completation=TRUE,exercise.cap = "Tablero de pruebas",exercise.eval=TRUE}
-# Esto es un comentario 
-1 + 5^2 # esta es una operación directa
-x<-as.integer(1+1) 
-typeof(x)
-typeof(x/3)
-print(x/3)
-sprintf("x=%i",x) # imprime fomateado
-```
-
-
-```{r comentarios-hint, exercise=TRUE,exercise.completation=TRUE, exercise.timelimit=60,exercise.cap = "Probá de corregir el código",exercise.eval=TRUE}
-Se asigna el valor de "x"
-x<-5
-
-```
-
-
-Calculá el número medio de semanas que tiene un año... [@R-gradethis]  
-```{r grade_res, exercise = TRUE,exercise.cap="Código"}
-
-```
-
-```{r grade_res-check}
-# Ejemplo obtenido de gradethis [@R-gradethis]
-grade_result(
-  pass_if(~ identical(.result, 365.25 / 12 / 7), "Existen 4.348214 semanas en un mes promedio."),
-  fail_if(~ identical(.result, 365 / 7 / 12), "Estás asumiendo un año promedio de 365 días? Debido a los años bisiestos, el promedio de días que tiene un año, actualmente es de 365.25 días."),
-  fail_if(~ identical(.result, 52 / 12), "Did you assume that the average year has 52 weeks? It is actually has a little more because 52 * 7 is only 364 days."),
-  fail_if(~ identical(.result, 4), "Close, but four is the average number of whole weeks in a month."),
-  fail_if(~ TRUE, "Not quite. Consider that there are 365.25 days in an average year, 12 months in a year, and 7 days in a week.")
-)
-```
-
-
-```{r options, echo = FALSE}
-question(
-  "Pregunta de prueba? probar con 1,2,3 y 15",
->>>>>>> b25880f36099d7dd5df84a0123c19e273d42c3ae
-  answer("1", message = "Realmente?"),
-  answer("2", message = "Realmente 2?"),
-  answer("3", message = "Realmente 3?"),
-  answer("15", correct = TRUE, message = "Correcta!!."),
-  type = "learnr_text", # radio
-  correct = "Respuesta Correcta!",
-  try_again = "Probá de nuevo!",
-  message = "Anotá la respuesta, para no olvidar...",
-  post_message = "Bién, ahora sigamos...",
-  submit_button = "Enviar respuesta",
-  try_again_button = "Reintentar",
-  allow_retry = TRUE,
-  random_answer_order = TRUE,
-  options = list(
-    placeholder = "La respuesta es '15'",
-    trim = TRUE
-  )
-)
-<<<<<<< HEAD
-``` 
-
-```{r letter-a, echo=FALSE,eval=FALSE}
-question("¿En qué se destaca R?",
-  answer("modelación estadística",correct = TRUE),
-  answer("graficos",correct = TRUE),
-  answer("almacenar y administrar datos",message="aunque puede almacenar datos y existen librerías que nos ayudan a gestinar los datos(como dplyr, tidy), los motores de bases de datos (como PostGreSQL,MySQL y SQLite) lo hacen mejor"),
-  answer("modelos dinámicos",message="como lenguaje, puede ser utilizado, pero requiere escribir mucho código"),
-  answer("teledetección", message = ""),
-  answer("modelos hidrológicos"),
-  answer("Consultas y getión de datos espaciales"),
-  answer("programación de alta prestación"),
-  incorrect="Aunque no es lo más apropiado, también puede hacerlo...",
-  allow_retry = TRUE,
-  random_answer_order = TRUE
-)
-```  
 # Referencias  
-=======
-```
->>>>>>> b25880f36099d7dd5df84a0123c19e273d42c3ae
+
