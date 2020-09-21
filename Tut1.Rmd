@@ -36,7 +36,6 @@ pack<-packages_versions(packages[1])
 for (i in packages[-1]){ pack<-rbind.data.frame(pack,packages_versions(i))
 }
 
-###--------------
 ```
 
 # Bases {data-progressive=TRUE}
@@ -96,30 +95,7 @@ grade_result(
 ```
 
 
-```{r options, echo = FALSE}
-question(
-  "Pregunta de prueba? probar con 1,2,3 y 15",
-  answer("1", message = "Realmente?"),
-  answer("2", message = "Realmente 2?"),
-  answer("3", message = "Realmente 3?"),
-  answer("15", correct = TRUE, message = "Correcta!!."),
-  type = "learnr_text", # radio
-  correct = "Respuesta Correcta!",
-  try_again = "Probá de nuevo!",
-  message = "Anotá la respuesta, para no olvidar...",
-  post_message = "Bién, ahora sigamos...",
-  submit_button = "Enviar respuesta",
-  try_again_button = "Reintentar",
-  allow_retry = TRUE,
-  random_answer_order = TRUE,
-  options = list(
-    placeholder = "La respuesta es '15'",
-    trim = TRUE
-  )
-)
-
-``` 
-
+# R en el "ecosistema" del _Open Source_   
 ```{r letter-a, echo=FALSE,eval=FALSE}
 question("¿En qué se destaca R?",
   answer("modelación estadística",correct = TRUE),
@@ -135,7 +111,7 @@ question("¿En qué se destaca R?",
   random_answer_order = TRUE
 )
 ```  
+
 # Referencias  
 
-```
 
