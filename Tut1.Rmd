@@ -1,28 +1,31 @@
 ---
-title: "Introducción al `R`"
+title: "Introducción al `R`... muy introductoria..."
 author: "Sergio Roldán B."
+description: Este es un tutorial para introducir al uso de R en el trabajo colaborativo
+  de INTA
 output:
-  html_document:
-    df_print: paged
   learnr::tutorial:
     allow_skip: yes
-runtime: shiny_prerendered 
-bibliography:
-  - "packages.bib"
+    progressive: yes
 link-citations: yes
-description: |
-  jjjj
+resource_files:
+- covid.html
+runtime: shiny_prerendered
+bibliography: packages.bib
 tutorial:
   version: 0.102
 ---
 
 ```{r setup, include=FALSE}
+library(rmarkdown)
+
 library(learnr)
+tutorial_options(exercise.timelimit = 10)#,exercise.completion = FALSE,exercise.eval=TRUE)
 library(gradethis)
-tutorial_options(exercise.completion = FALSE,exercise.timelimit = 10,exercise.eval=TRUE)
+gradethis::gradethis_setup()#exercise.checker = gradethis::grade_learnr)
+
 knitr::opts_chunk$set(echo = TRUE, highlight = TRUE) 
-gradethis::gradethis_setup()
-  #exercise.checker = gradethis::grade_learnr)
+
 
 ## Cita de paquetes  
 packages<-c(.packages())
@@ -37,28 +40,20 @@ for (i in packages[-1]){ pack<-rbind.data.frame(pack,packages_versions(i))
 }
 
 ```
+# La torta antes de los ingredientes...  
+https://sdrb.shinyapps.io/covid  
 
 # Bases {data-progressive=TRUE}
-Primero vamos a ver los comandos más básicos, para lo cual empezaremos a utilizar los "Tableros de Prueba", donde podrá probar los comandos.   
+Utilice los "Tableros de Prueba", donde podrá probar los comandos.   
 
-## Comentarios  
+
+## Comentarios 
 El carácter "#" tiene la función desabilitar la interpretación de la cadena de caracteres que sigue. Le dice al intérprete que ignore lo que sigue... 
 Para ver el efecto, quítele el "#" a la línea y corra el código.  
 ```{r comentarios, exercise=TRUE,exercise.completation=TRUE,exercise.cap = "Tablero de pruebas",exercise.eval=TRUE}
 # Esto es un comentario 
 
 ```
-## Asignación  
-"__<-__" se utiliza para la __asignación__ de valores o funciones a una variable (u objeto). "__=__" tiene la misma utilidad pero puede generar confusión cuando se lo utiliza como operador de comparación (como "__x==y__").   
-Si el código devuelve error, pruebe corregirlo.  
-```{r asignacion, exercise=TRUE,exercise.completation=TRUE, exercise.timelimit=60,exercise.cap = "Tablero de pruebas",exercise.eval=FALSE}
-Se asigna el valor a "x"
-x<-1 + 5^2 # esta es una operación de asignación
-x # muestra el valor de "x"  
-```  
-<div id="asignacion-hint">
-**Sugerencia:** Debieras usar el "#" en alguna parte.
-</div>
 
 ## Operaciones básicas  
 ```{r operaciones, exercise=TRUE,exercise.completation=TRUE,exercise.cap = "Tablero de pruebas",exercise.eval=TRUE}
@@ -68,13 +63,13 @@ x # muestra el valor de "x"
 x<-sqrt(3^2+4^2);  
 y<-log10(10000)  
 z<-log2(128)   
+# sprintf() es una función que retorna la combinación de caracteres y números que será vista más adelante 
 sprintf("El valor de x= %f, el de y=%f y el de z= %f",x,y,z)  
 ```
 
+### Ejercicio  
 
-
-#
-Calcule, con una precisión de $\frac{1}{1000}$, el número medio de semanas que tiene un mes ... [@R-gradethis]  
+Calcule, con una precisión del milésimo, el número medio de semanas que tiene un mes ... [@R-gradethis]  
 ```{r eje1, exercise =TRUE,exercise.cap="Código"}
 
 ```
@@ -83,20 +78,185 @@ Calcule, con una precisión de $\frac{1}{1000}$, el número medio de semanas que
 # Ejemplo obtenido de gradethis [@R-gradethis]
 grade_result(
   pass_if(~ identical(.result, 365.25 / 12 / 7), "Correcto!!. Existen 4.348214 semanas en un mes promedio."),
-  fail_if(~ identical(.result, 365 / 7 / 12), "Estás asumiendo un año promedio de 365 días? Debido a los años bisiestos, el promedio de días que tiene un año, actualmente es de 365.25 días."),
-  fail_if(~ identical(.result, 52 / 12), "Asumes que el año medio tiene 52 semanas? Actualmente tiene un poco más, porque  52 * 7 sólo son 364 días."),
-  fail_if(~ identical(.result, 4), "Cerca, pero cuatro es el número promedio de semanas en un mes."),
-  fail_if(~ TRUE, "Incorrecto. Considerá que son 365.25 días en un año promedio, 12 meses en un año y 7 días en la semana.")
+  fail_if(~ identical(.result, 365 / 7 / 12), "Está asumiendo un año promedio de 365 días? Debido a los años bisiestos, el promedio de días que tiene un año, actualmente es de 365.25 días."),
+  fail_if(~ identical(.result, 52 / 12), "Asume que el año medio tiene 52 semanas? Actualmente tiene un poco más, porque  52 * 7 sólo son 364 días."),
+  fail_if(~ identical(.result, 4), "Cerca, pero ... ¿el número promedio de semanas en un mes es 4?."),
+  fail_if(~ TRUE, "Incorrecto. Considere que son 365.25 días en un año promedio, 12 meses en un año y 7 días en la semana.")
 )
 ```
 
 ```{r eje1-solution}
+# 365.25 días en un año
+# 12 meses en un año 
+# 7 días por semana
 365.25/12/7
 ```
 
+## Asignación `<-`
+`<-` se utiliza para la __asignación__ de valores o funciones a una variable (u objeto). `=` tiene la misma utilidad pero puede generar confusión cuando se lo utiliza como operador de comparación (como en `x==y`).   
+Si el código devuelve error, pruebe corregirlo.  
 
+### Ejercicio  
+```{r asignacion, exercise=TRUE,exercise.completation=TRUE, exercise.timelimit=60,exercise.cap = "Tablero de pruebas",exercise.eval=FALSE}
+Se asigna el valor a "x"
+x<-1 + 5^2 # esta es una operación de asignación
+x # muestra el valor de "x"  
+y<-sqrt(x-1) 
+sprintf("Siendo x= %f, entonces empezamos por 1+ %f^2",x,y)
+```  
+<div id="asignacion-hint">
+**Sugerencia:** Las líneas sin comentar suelen generar errores...Debiera usar "#" en alguna parte.
+</div>
+
+
+## Mención sobre las Funciones   
+Las funciones son una herramienta muy importante en cualquier lenguaje, particularmente en __R__. Nos referimos a ellas ahora muy superficialmente, para retomar luego con más profundidad. 
+Una función [^Existen de distintos tipos como "closure","builtin", que aclararemos más adelante.] es una secuencia de _comandos_, relacionadas con _argumentos_, que después de alguna/s tareas nos devuelven alguna información. Nos permiten "estandarizar" las tareas     
+Si necesitaramos calcular la suma de las potencias de dos números, una solución podría ser...  
+   
+
+````markdown
+`r ''`
+sumapotencia<-function(n1,n2,pot=3){
+  print(sprintf("sumapotencia(n1=%f,n2=%f,pot=%f)=",n1,n2,pot))
+  return(sum(n1^pot,n2^pot))
+}
+```` 
+
+`n1`, `n2` y `pot` son argumentos de la función `sumapotencia()`. Los dos primeros parámetros son obligatorios (_mandatory_), mientras que `pot` puede ser omitido, en cuyo caso actúa con un valor de `pot=3`. `return()` en sí también es una función, que devuelve el contenido de su argumento a que llama la función.  
+__NOTA__: En la segunda línea se vuelve  a utilizar `sprintf()` para generar una combinación de cadenas de texto y valores de variables, ahora como parámetro de otra función, `print()` que imprime el contenido del parámetro en la salida estándar (para el caso en pantalla).   
+Llamándola ...para valores de $1$ y $2$ por ejemplo...  
+
+````markdown
+`r ''`
+sumapotencia(1,2)
+```` 
+
+
+
+### Ejercicios \label{ejeFunc0}
+1. Intente definir la función `sumapotencia()` como lo hacemos arriba y luego llámela para el cuadrado de 3 y 4.(No use espacios ni líneas vacíos en la definición)   
+```{r funcion00, exercise = TRUE}
+
+```
+
+
+```{r funcion00-solution}
+sumapotencia<-function(n1,n2,pot=3){
+  print(sprintf("sumapotencia(n1=%f,n2=%f,pot=%f)=",n1,n2,pot))
+  return(sum(n1^pot,n2^pot))
+}
+sumapotencia(n1=3,n2=4,pot=2)
+```
+
+```{r funcion00-check}
+grade_code("Bien..., sigamos...")
+```
+2. Tilde todas las opciones verdaderas ...  
+
+```{r funcion01, echo=FALSE,eval=TRUE}
 # R en el "ecosistema" del _Open Source_   
+question("¿En __R__, a qué se le llama función?",
+  answer("secuencia de comados que devuelve una valor",correct = TRUE),
+  answer("un empaquetado de código, con argumentos, declaración y contexto",correct = TRUE),
+  answer("Una relación que a cada argumento le hace corresponder un valor de salida",message="no, esa sería una definición más bien matemática"),
+  answer("una secuencia de comandos",message="eso es más bien un script"),
+  incorrect="no...",
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```  
+3. Revise la definición de la función `SQsumapotencia()` y responda..   
+````markdown
+`r ''`
+SQsumapotencia<-function(n1,n2=4,pot=2){
+  print(sprintf("sumapotencia(n1=%f,n2=%f,pot=%f)=",n1,n2,pot))
+  return(sqrt(sum(n1^pot,n2^pot)))
+}
+x<-SQsumapotencia(3)
+```` 
+
+```{r funcion02,echo=FALSE} 
+question("¿cuál sería el valor de `x`?",
+  answer("5",correct=TRUE,message="$\\sqrt{3^2+4^2}=5$"),
+  answer("25",message=" Note que se agregó la función `sqrt()`, que representa $\\sqrt{(...)}$ "),
+  answer("91",message="Note que: Note que se agregó la función `sqrt()`, que representa $\\sqrt{(...)}$ y se cambió el valor por defecto del argumento `pot=2`"),
+  answer("9.539",message="Note que se cambió el valor por defecto del argumento `pot=2`"),
+ allow_retry = TRUE,
+ random_answer_order = TRUE,
+ try_again = "Intenta de nuevo!",
+ post_message = "Podemos continuar...",
+ submit_button = "Envíe la respuesta!",
+ try_again_button = "Intentemos de nuevo!"
+)
+```  
+
+## Ayudas ... 
+Creemos que hasta aquí hemos incorporado los conceptos mínimos necesarios para poder acceder a las __ayudas__, aunque quedan muchos conceptos por ir descubriendo...  
+
+> En el _código abierto_, las ayudas a veces pueden no existir o ser incompletas, pero son **AYUDAS** no son  _obviedades_, y son la principal herramienta para que el código pueda ser utilizado, compartido y mejorado. 
+> En el Open Source ... la gestión de las ayudas es una gran idea
+
+### Pruebe...  
+
+- `help(sprintf)`(función que ya usamos en la sección \ref{ejeFunc0})  
+- `help.start()`  (lanza la página de ayuda en el navegador que esté utilizando)  
+- `help("apropos")` 
+
+
+
+```{r help00,exercise = TRUE,exercise.lines=5,exercise.cap="Tablero de práctica"}
+
+```  
+
+```{r help01, echo=FALSE}
+quiz(caption = "Pruebe en el tablero de código de arriba `apropos(apropos)`,",
+question("¿Qué espera de respuesta?",
+         answer("una página de ayuda"),
+         answer("una lista de \"cosas\" relacionadas con `apropos`",correct=TRUE)
+),
+question("¿Qué significa la respuesta:?",
+  answer("el argumento `what` debiera ser una _cadena de caracteres_",correct=TRUE,message="¿Por qué?"),
+  answer("`apropos` debe contener el argumento `what` ",message=" vea la ayuda, como `what` es el único argumento obligatorio, por defecto se asume que el único argumento que está ingresando es `what`"),
+  answer("debe especificar el argumento `mode=\"mode\"`",message="vea la ayuda"),
+  allow_retry = TRUE,
+ random_answer_order = TRUE,
+ try_again = "Intente de nuevo!",
+ post_message = "¿Cómo que `apropos` no es una cadena de caracteres? ¿Entonces qué es?(Usemos la función `typeof()` para averiguarlo.)",
+ submit_button = "Envíe la respuesta!",
+ try_again_button = "Reintente!"
+),
+question("Entonces..., ¿qué es `apropos`?",
+  answer("funcion",correct=TRUE,message="aunque sería más correcto que empecemos a utilizar `function` o `closure`"),
+  answer("function",correct=TRUE),
+  answer("closure",correct=TRUE),
+  type = "learnr_text", # radio
+  correct = "Respuesta Correcta!",
+  try_again = "Probá de nuevo!",
+  message = "Anotá la respuesta, para no olvidar...",
+  post_message = "y si prueba `apropos(\"apropos\")`",
+  submit_button = "Enviar respuesta",
+  try_again_button = "Reintentar",
+  allow_retry = TRUE
+         )
+)
+```  
+
+## variables, objetos, clases...  
+_coming soon_  
+
+- números 
+- booleanos
+- cadenas de caracteres 
+- vectores  
+- matrices  
+- data.frame  
+
+
+***  
+
 ```{r letter-a, echo=FALSE,eval=FALSE}
+# R en el "ecosistema" del _Open Source_   
 question("¿En qué se destaca R?",
   answer("modelación estadística",correct = TRUE),
   answer("graficos",correct = TRUE),
@@ -112,6 +272,16 @@ question("¿En qué se destaca R?",
 )
 ```  
 
+
+> Obviamente, este documento fué elaborado usando __R__ [@R-base], con la aplicación de los paquetes detallados en la siguiente lista:   
+
+```{r citaspackages,as.is=TRUE,echo=FALSE}
+knitr::kable(pack,caption="Paquetes utilizados")
+```
+ __No deje de visitar__    
+ 
+ - [Open Source Initiative] (https://opensource.org)
+ - [Free Software Foundation](https://www.fsf.org)
+
+
 # Referencias  
-
-
